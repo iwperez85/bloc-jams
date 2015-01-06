@@ -11,6 +11,13 @@ body {
 body.landing {
   background: #5b5579; }
 
+body.landing .navbar {
+  margin-bottom: 0; }
+
+/* medium-purple: #7B46A3 - 123, 70, 163 */
+.player-header-nav {
+  background-color: rgba(123, 70, 163, 0.9); }
+
 .hero-content {
   background: #2f1d57;
   padding: 100px 0; }
@@ -37,13 +44,6 @@ body.landing {
 
 .selling-points .point p {
   font-size: 14px; }
-
-body.landing .navbar {
-  margin-bottom: 0; }
-
-/* medium-purple: #7B46A3 - 123, 70, 163 */
-.player-header-nav {
-  background-color: rgba(123, 70, 163, 0.9); }
 
 .album-header-container {
   margin-top: 55px;
@@ -95,6 +95,44 @@ body.landing .navbar {
 
 .collection-album-container img {
   max-width: 100%; }
+
+.collection-album-container .collection-album-image-container {
+  position: relative; }
+
+.collection-album-container .collection-album-image-overlay {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: 10; }
+
+.collection-album-container .collection-overlay-content {
+  position: absolute;
+  bottom: 20px;
+  width: 100%;
+  text-align: center; }
+
+.collection-album-container .collection-overlay-button {
+  font-size: 20px;
+  background-color: white;
+  color: #d2287b;
+  border-radius: 50% 50%;
+  display: inline-block;
+  width: 42px;
+  height: 42px; }
+
+.collection-album-container .collection-overlay-button:hover {
+  cursor: pointer;
+  color: white;
+  background-color: #d2287b; }
+
+.collection-album-container .collection-overlay-button i {
+  line-height: 42px; }
+
+.collection-album-container .collection-overlay-button .fa-play {
+  padding-left: 5px; }
 
 
 /*# sourceMappingURL=app.css.map*/

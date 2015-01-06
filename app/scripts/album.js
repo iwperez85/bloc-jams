@@ -1,4 +1,4 @@
-  // Example Album
+ // Example Album
  var albumPicasso = {
    name: 'The Colors',
    artist: 'Pablo Picasso',
@@ -30,7 +30,7 @@
      ]
  };
 
-var createSongRow = function(songNumber, songName, songLength) {
+  var createSongRow = function(songNumber, songName, songLength) {
    var template =
        '<tr>'
      + '  <td class="col-md-1">' + songNumber + '</td>'
@@ -71,14 +71,13 @@ var createSongRow = function(songNumber, songName, songLength) {
  
  };
 
-// This 'if' condition is used to prevent the jQuery modifications
+
+ // This 'if' condition is used to prevent the jQuery modifications
  // from happening on non-Album view pages.
  //  - Use a regex to validate that the url has "/album" in its path.
  if (document.URL.match(/\/album.html/)) {
    // Wait until the HTML is fully processed.
    $(document).ready(function() {
-    
-   
-     changeAlbumView(albumPicasso, albumMarconi);
+      changeAlbumView(albumPicasso);
    });
  }

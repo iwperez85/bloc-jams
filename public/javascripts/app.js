@@ -91,7 +91,7 @@
   globals.require.brunch = true;
 })();
 require.register("scripts/album", function(exports, require, module) {
-  // Example Album
+ // Example Album
  var albumPicasso = {
    name: 'The Colors',
    artist: 'Pablo Picasso',
@@ -123,7 +123,7 @@ require.register("scripts/album", function(exports, require, module) {
      ]
  };
 
-var createSongRow = function(songNumber, songName, songLength) {
+  var createSongRow = function(songNumber, songName, songLength) {
    var template =
        '<tr>'
      + '  <td class="col-md-1">' + songNumber + '</td>'
@@ -164,15 +164,14 @@ var createSongRow = function(songNumber, songName, songLength) {
  
  };
 
-// This 'if' condition is used to prevent the jQuery modifications
+
+ // This 'if' condition is used to prevent the jQuery modifications
  // from happening on non-Album view pages.
  //  - Use a regex to validate that the url has "/album" in its path.
  if (document.URL.match(/\/album.html/)) {
    // Wait until the HTML is fully processed.
    $(document).ready(function() {
-    
-   
-     changeAlbumView(albumPicasso, albumMarconi);
+      changeAlbumView(albumPicasso);
    });
  }
 });
@@ -181,16 +180,15 @@ var createSongRow = function(songNumber, songName, songLength) {
 require("./landing");
 require('./collection');
 require('./album');
-    
-
-
 });
 
 ;require.register("scripts/collection", function(exports, require, module) {
-var buildAlbumThumbnail = function() {
+  var buildAlbumThumbnail = function() {
     var template =
         '<div class="collection-album-container col-md-2">'
-      + '  <img src="/images/album-placeholder.png"/>'
+      + '  <div class="collection-album-image-container">'
+      + '    <img src="/images/album-placeholder.png"/>'
+      + '  </div>'
       + '  <div class="caption album-collection-info">'
       + '    <p>'
       + '      <a class="album-name" href="/album.html"> Album Name </a>'
@@ -205,6 +203,24 @@ var buildAlbumThumbnail = function() {
  
    return $(template);
  };
+
+ var buildAlbumOverlay = function(albumURL) {
+    var template =
+        '<div class="collection-album-image-overlay">'
+      + '  <div class="collection-overlay-content">'
+      + '    <a class="collection-overlay-button" href="' + albumURL + '">'
+      + '      <i class="fa fa-play"></i>'
+      + '    </a>'
+      + '    &nbsp;'
+      + '    <a class="collection-overlay-button">'
+      + '      <i class="fa fa-plus"></i>'
+      + '    </a>'
+      + '  </div>'
+      + '</div>'
+      ;
+    return $(template);
+  };
+
  var updateCollectionView = function() {
    var $collection = $(".collection-container .row");
    $collection.empty();
@@ -213,19 +229,27 @@ var buildAlbumThumbnail = function() {
      var $newThumbnail = buildAlbumThumbnail();
      $collection.append($newThumbnail);
    }
- };
- 
+   var onHover = function(event) {
+     $(this).append(buildAlbumOverlay("/album.html"));
+   };
+ var offHover = function(event) {
+    $(this).find('.collection-album-image-overlay').remove();
+  };
 
-if (document.URL.match(/\/collection.html/)) {
-  // Wait until the HTML is fully processed.
-  $(document).ready(function() {
-     updateCollectionView();
-  });
-};
+  $collection.find('.collection-album-image-container').hover(onHover, offHover);
+ };
+   
+
+ if (document.URL.match(/\/collection.html/)) {
+   // Wait until the HTML is fully processed.
+   $(document).ready(function() {
+    updateCollectionView();
+   });
+ }
 });
 
 ;require.register("scripts/landing", function(exports, require, module) {
-  $(document).ready(function() { 
+$(document).ready(function() { 
     $('.hero-content h3').click(function(){
       var subText = $(this).text();
        $(this).text(subText + "!");
