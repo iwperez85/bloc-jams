@@ -177,9 +177,7 @@ td.song-number {
 .player-bar a, .player-bar a:hover {
   color: white;
   cursor: pointer;
-  text-decoration: none;
-  background: #669900;
-  transition-property: background; }
+  text-decoration: none; }
 
 .player-bar .container {
   display: table;
