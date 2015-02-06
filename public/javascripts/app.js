@@ -210,22 +210,87 @@ require.register("scripts/album", function(exports, require, module) {
  
  };
 
+  var updateSeekPercentage = function($seekBar, event) {
+   var barWidth = $seekBar.width();
+   var offsetX = event.pageX - $seekBar.offset().left;
+ 
+   var offsetXPercent = (offsetX  / barWidth) * 100;
+   offsetXPercent = Math.max(0, offsetXPercent);
+   offsetXPercent = Math.min(100, offsetXPercent);
+ 
+   var percentageString = offsetXPercent + '%';
+   $seekBar.find('.fill').width(percentageString);
+   $seekBar.find('.thumb').css({left: percentageString});
+ }
+
+var setupSeekBars = function() {
+ 
+   $seekBars = $('.player-bar .seek-bar');
+   $seekBars.click(function(event) {
+     updateSeekPercentage($(this), event);
+   });
+
+   $seekBars.find('.thumb').mousedown(function(event){
+    var $seekBar = $(this).parent();
+
+      $seekBar.addClass('no-animate');
+ 
+    $(document).bind('mousemove.thumb', function(event){
+      updateSeekPercentage($seekBar, event);
+    });
+ 
+    //cleanup
+    $(document).bind('mouseup.thumb', function(){
+      $seekBar.removeClass('no-animate');
+      
+      $(document).unbind('mousemove.thumb');
+      $(document).unbind('mouseup.thumb');
+    });
+ 
+  });
+ 
+ };
 
  // This 'if' condition is used to prevent the jQuery modifications
  // from happening on non-Album view pages.
  //  - Use a regex to validate that the url has "/album" in its path.
  if (document.URL.match(/\/album.html/)) {
-   // Wait until the HTML is fully processed.
-   $(document).ready(function() {
-      changeAlbumView(albumPicasso);
-   });
- }
+  // Wait until the HTML is fully processed.
+  $(document).ready(function() {
+    changeAlbumView(albumPicasso)
+    setupSeekBars();
+  });
+}
 });
 
 ;require.register("scripts/app", function(exports, require, module) {
-require("./landing");
-require('./collection');
-require('./album');
+//require('./landing');
+//require('./album');
+//require('./collection');
+//require('./profile');
+
+blocJams.config(['$stateProvider', '$locationProvider', function($stateProvider, $locationProvider) {
+   $locationProvider.html5Mode(true);
+ 
+   $stateProvider.state('landing', {
+     url: '/',
+     controller: 'Landing.controller',
+     templateUrl: '/templates/landing.html'
+   });
+ }]);
+ 
+
+ 
+   blocJams.controller('Landing.controller', ['$scope', function($scope) {
+    $scope.subText = "Turn the music up!";
+
+    $scope.subTextClicked = function() {
+     $scope.subText += '!';
+   };
+
+
+   
+
 });
 
 ;require.register("scripts/collection", function(exports, require, module) {
@@ -326,6 +391,30 @@ $(document).ready(function() {
   $( "h1" ).fadeOut( "slow");
 });
 });
+});
+
+;require.register("scripts/profile", function(exports, require, module) {
+ var tabsContainer = ".user-profile-tabs-container"
+ var selectTabHandler = function(event) {
+   $tab = $(this);
+   $(tabsContainer + " li").removeClass('active');
+   $tab.parent().addClass('active');
+   selectedTabName = $tab.attr('href');
+   console.log(selectedTabName);
+   $(".tab-pane").addClass('hidden');
+   $(selectedTabName).removeClass('hidden');
+   event.preventDefault();
+ };
+
+
+
+ if (document.URL.match(/\/profile.html/)) {
+   $(document).ready(function() {
+     var $tabs = $(tabsContainer + " a");
+     $tabs.click(selectTabHandler);
+     $tabs[0].click();
+   });
+ }
 });
 
 ;
