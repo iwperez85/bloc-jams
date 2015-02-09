@@ -287,6 +287,7 @@ blocJams.config(['$stateProvider', '$locationProvider', function($stateProvider,
     $scope.subTextClicked = function() {
      $scope.subText += '!';
    };
+  }]);
 
 
    
