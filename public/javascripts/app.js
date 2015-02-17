@@ -317,6 +317,12 @@ blocJams.config(['$stateProvider', '$locationProvider', function($stateProvider,
      templateUrl: '/templates/album.html',
      controller: 'Album.controller'
    });
+
+   $stateProvider.state('player_bar', {
+     url: '/player_bar',
+     templateUrl: '/templates/player_bar.html',
+     controller: 'Player_bar.controller'
+   });
  }]);
 
 
