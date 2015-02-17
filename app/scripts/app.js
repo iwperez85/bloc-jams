@@ -2,6 +2,8 @@
 //require('./album');
 //require('./collection');
 //require('./profile');
+
+
  // Example album.
  var albumPicasso = {
    name: 'The Colors',
@@ -35,7 +37,7 @@ blocJams.config(['$stateProvider', '$locationProvider', function($stateProvider,
    $stateProvider.state('song', {
     url: '/song',
     controller: 'Song.controller',
-    templateUrl: '/templates/song.html'
+    template: '<h1> Song Template </h1>'
 });
 
    $stateProvider.state('collection', {
@@ -48,6 +50,12 @@ blocJams.config(['$stateProvider', '$locationProvider', function($stateProvider,
      url: '/album',
      templateUrl: '/templates/album.html',
      controller: 'Album.controller'
+   });
+
+   $stateProvider.state('player_bar', {
+     url: '/player_bar',
+     templateUrl: '/templates/player_bar.html',
+     controller: 'Player_bar.controller'
    });
  }]);
 
