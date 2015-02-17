@@ -325,9 +325,6 @@ blocJams.config(['$stateProvider', '$locationProvider', function($stateProvider,
    });
  }]);
 
-
- 
-
  
    blocJams.controller('Landing.controller', ['$scope', function($scope) {
     $scope.subText = "Turn the music up!";
@@ -346,11 +343,11 @@ blocJams.config(['$stateProvider', '$locationProvider', function($stateProvider,
 
 
 
- blocJams.controller('Album.controller', ['$scope', function($scope) {
+ blocJams.controller('Album.controller', ['$scope', 'SongPlayer', function($scope, SongPlayer) {
    $scope.album = angular.copy(albumPicasso);
 
    var hoveredSong = null;
-   var playingSong = null;
+   
  
    $scope.onHoverSong = function(song) {
      hoveredSong = song;
@@ -361,7 +358,7 @@ blocJams.config(['$stateProvider', '$locationProvider', function($stateProvider,
    };
 
    $scope.getSongState = function(song) {
-     if (song === playingSong) {
+     if (song === SongPlayer.currentSong && SongPlayer.playing) {
        return 'playing';
      }
      else if (song === hoveredSong) {
@@ -371,13 +368,58 @@ blocJams.config(['$stateProvider', '$locationProvider', function($stateProvider,
    };
 
     $scope.playSong = function(song) {
-      playingSong = song;
+       SongPlayer.setSong($scope.album, song);
+       SongPlayer.play();
     };
  
     $scope.pauseSong = function(song) {
-      playingSong = null;
+      SongPlayer.pause();
     };
  }]);
+
+  blocJams.controller('PlayerBar.controller', ['$scope', 'SongPlayer', function($scope, SongPlayer) {
+   $scope.songPlayer = SongPlayer;
+ }]);
+
+ blocJams.service('SongPlayer', function() {
+  var trackIndex = function(album, song) {
+     return album.songs.indexOf(song);
+   };
+
+   return {
+     currentSong: null,
+     currentAlbum: null,
+     playing: false,
+ 
+     play: function() {
+       this.playing = true;
+     },
+     pause: function() {
+       this.playing = false;
+     },
+     next: function() {
+       var currentTrackIndex = trackIndex(this.currentAlbum, this.currentSong);
+       currentTrackIndex++;
+       if (currentTrackIndex >= this.currentAlbum.songs.length) {
+         currentTrackIndex = 0;
+       }
+       this.currentSong = this.currentAlbum.songs[currentTrackIndex];
+     },
+      previous: function() {
+       var currentTrackIndex = trackIndex(this.currentAlbum, this.currentSong);
+       currentTrackIndex--;
+       if (currentTrackIndex < 0) {
+         currentTrackIndex = this.currentAlbum.songs.length - 1;
+       }
+ 
+       this.currentSong = this.currentAlbum.songs[currentTrackIndex];
+     },
+     setSong: function(album, song) {
+       this.currentAlbum = album;
+       this.currentSong = song;
+     }
+   };
+ });
 
    
 
