@@ -32,7 +32,7 @@ blocJams.config(['$stateProvider', '$locationProvider', function($stateProvider,
      url: '/',
      controller: 'Landing.controller', 
      templateUrl: '/templates/landing.html'
-   })
+   });
 
    $stateProvider.state('song', {
     url: '/song',
@@ -77,7 +77,7 @@ blocJams.config(['$stateProvider', '$locationProvider', function($stateProvider,
 
    $scope.playAlbum = function(album){
      SongPlayer.setSong(album, album.songs[0]); // Targets first song in the array.
-   }
+   };
  }]);
 
 
@@ -127,7 +127,7 @@ blocJams.config(['$stateProvider', '$locationProvider', function($stateProvider,
    });
  }]);
 
- blocJams.service('SongPlayer', function() {
+ blocJams.service('SongPlayer', ['$rootScope', function($rootScope) {
   var currentSoundFile = null;
   var trackIndex = function(album, song) {
      return album.songs.indexOf(song);
@@ -178,29 +178,8 @@ blocJams.config(['$stateProvider', '$locationProvider', function($stateProvider,
      onTimeUpdate: function(callback) {
       return $rootScope.$on('sound:timeupdate', callback);
     },
-
-     blocJams.service('SongPlayer', ['$rootScope', function($rootScope) {
-      setSong: function(album, song) {
-      if (currentSoundFile) {
-      currentSoundFile.stop();
-    }
-       this.currentAlbum = album;
-       this.currentSong = song;
-
-       currentSoundFile = new buzz.sound(song.audioUrl, {
-      formats: [ "mp3" ],
-      preload: true
-    });
- 
-    currentSoundFile.bind('timeupdate', function(e){
-        $rootScope.$broadcast('sound:timeupdate', this.getTime());
-      });
-
-    this.play();
-     }
-   }]);
    };
- });
+ }]);
 
 blocJams.directive('slider', ['$document', function($document){
 
@@ -227,7 +206,7 @@ blocJams.directive('slider', ['$document', function($document){
      if(typeof value === 'string') {
        return Number(value);
      }
-   }
+   };
  
 
   return {
@@ -292,16 +271,10 @@ scope.trackThumb = function() {
            });
 
          });
- 
-         //cleanup
-         $document.bind('mouseup.thumb', function(){
-           $document.unbind('mousemove.thumb');
-           $document.unbind('mouseup.thumb');
-         });
-       };
 
-blocJams.filter('timecode', function(){
-   return function(seconds) {
+   blocJams.filter('timecode', function(){
+  
+     return function(seconds) {
      seconds = Number.parseFloat(seconds);
  
      // Returned when no time is provided.
@@ -326,9 +299,18 @@ blocJams.filter('timecode', function(){
      output += remainingSeconds;
  
      return output;
-   }
- })
+   };
+ });
+ 
+         //cleanup
+         $document.bind('mouseup.thumb', function(){
+           $document.unbind('mousemove.thumb');
+           $document.unbind('mouseup.thumb');
+         });
+       };
+
 }]);
+
 
 
 
