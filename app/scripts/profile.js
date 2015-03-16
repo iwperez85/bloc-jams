@@ -1,4 +1,4 @@
- var tabsContainer = ".user-profile-tabs-container"
+var tabsContainer = ".user-profile-tabs-container"
  var selectTabHandler = function(event) {
    $tab = $(this);
    $(tabsContainer + " li").removeClass('active');
@@ -9,8 +9,6 @@
    $(selectedTabName).removeClass('hidden');
    event.preventDefault();
  };
-
-
 
  if (document.URL.match(/\/profile.html/)) {
    $(document).ready(function() {

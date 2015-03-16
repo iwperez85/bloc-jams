@@ -79,14 +79,13 @@
       display: inline-block;
  
       i {
-        width: 20px;
+        width: 40px;
         font-size: 20px;
         display: inline-block;
         vertical-align: middle;
-        text-align: left;
       }
  
-      .slider {
+      .seek-bar {
         display: inline-block;
         width: 100px;
         vertical-align: middle;
@@ -113,7 +112,7 @@
     }
   }
  
-  .slider {
+  .seek-bar {
     height: 5px;
     background: rgba(255, 255, 255, 0.3);
     border-radius: 2px;
@@ -141,13 +140,13 @@
       transition: all 100ms ease-in-out;
     }
  
-    &:active {
+    &.no-animate {
       .fill, .thumb {
         transition: none;
       }
     }
  
-    &:hover .thumb, &:active .thumb {
+    &:hover .thumb {
       width: 20px;
       height: 20px;
       margin-top: -10px;

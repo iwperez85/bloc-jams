@@ -1,4 +1,4 @@
- // Example Album
+// Example Album
  var albumPicasso = {
    name: 'The Colors',
    artist: 'Pablo Picasso',
@@ -30,8 +30,8 @@
      ]
  };
 
-   var currentlyPlayingSong = null;
-   var createSongRow = function(songNumber, songName, songLength) {
+  var currentlyPlayingSong = null;
+  var createSongRow = function(songNumber, songName, songLength) {
    var template =
        '<tr>'
      + '  <td class="song-number col-md-1" data-song-number="' + songNumber + '">' + songNumber + '</td>'
@@ -39,34 +39,33 @@
      + '  <td class="col-md-2">' + songLength + '</td>'
      + '</tr>'
      ;
+
+ // Instead of returning the row immediately, we'll attach hover
+  // functionality to it first.
+   var $row = $(template);
  
-     // Instead of returning the row immediately, we'll attach hover
-    // functionality to it first.
-    var $row = $(template);
- 
-    var onHover = function(event) {
-    var songNumberCell = $(this).find('.song-number');
-    var songNumber = songNumberCell.data('song-number');
+   var onHover = function(event) {
+     var songNumberCell = $(this).find('.song-number');
+     var songNumber = songNumberCell.data('song-number');
     if (songNumber !== currentlyPlayingSong) {
       songNumberCell.html('<a class="album-song-button"><i class="fa fa-play"></i></a>');
     }
    };
  
-     var offHover = function(event) {
+   var offHover = function(event) {
      var songNumberCell = $(this).find('.song-number');
      var songNumber = songNumberCell.data('song-number');
      if (songNumber !== currentlyPlayingSong) {
       songNumberCell.html(songNumber);
     }
    };
-
-    // Toggle the play, pause, and song number based on the button clicked.
-     var clickHandler = function(event) {
+ 
+ // Toggle the play, pause, and song number based on the button clicked.
+   var clickHandler = function(event) {
      var songNumber = $(this).data('song-number');
-   
-     if (currentlyPlayingSong !== null) {
+  if (currentlyPlayingSong !== null) {
        // Revert to song number for currently playing song because user started playing new song.
-       var currentlyPlayingCell = $('.song-number[data-song-number="' + currentlyPlayingSong + '"]');
+       currentlyPlayingCell = $('.song-number[data-song-number="' + currentlyPlayingSong + '"]');
        currentlyPlayingCell.html(currentlyPlayingSong);
      }
  
@@ -82,11 +81,13 @@
      }
    };
 
-   $row.find('.song-number').click(clickHandler);
+   $row.find('.song-number').click(clickHandler); 
    $row.hover(onHover, offHover);
-   return $row;  
-
+   return $row;    
+ 
+   
  };
+
 
  var changeAlbumView = function(album) {
    // Update the album title
@@ -117,7 +118,7 @@
  
  };
 
-  var updateSeekPercentage = function($seekBar, event) {
+ var updateSeekPercentage = function($seekBar, event) {
    var barWidth = $seekBar.width();
    var offsetX = event.pageX - $seekBar.offset().left;
  
@@ -130,7 +131,7 @@
    $seekBar.find('.thumb').css({left: percentageString});
  }
 
-var setupSeekBars = function() {
+ var setupSeekBars = function() {
  
    $seekBars = $('.player-bar .seek-bar');
    $seekBars.click(function(event) {
@@ -140,7 +141,7 @@ var setupSeekBars = function() {
    $seekBars.find('.thumb').mousedown(function(event){
     var $seekBar = $(this).parent();
 
-      $seekBar.addClass('no-animate');
+    $seekBar.addClass('no-animate');
  
     $(document).bind('mousemove.thumb', function(event){
       updateSeekPercentage($seekBar, event);
@@ -158,15 +159,11 @@ var setupSeekBars = function() {
  
  };
 
- 
-$(document).ready(function() { setupSeekBars();});
- // This 'if' condition is used to prevent the jQuery modifications
- // from happening on non-Album view pages.
- //  - Use a regex to validate that the url has "/album" in its path.
+
  if (document.URL.match(/\/album.html/)) {
-  // Wait until the HTML is fully processed.
-  $(document).ready(function() {
-    changeAlbumView(albumPicasso)
-    setupSeekBars();
-  });
-}
+   // Wait until the HTML is fully processed.
+   $(document).ready(function() {
+      changeAlbumView(albumPicasso);
+      setupSeekBars();
+   });
+ }

@@ -1,29 +1,33 @@
 .collection-album-container {
-     margin-top: 30px;
-     margin-bottom: 20px;
-     position: relative;
-
-   .caption {
-     margin-top: 10px;
+    margin-top: 30px;
+    margin-bottom: 20px;
   }
-    p {
-     font-size: 16px;
-     font-weight: 300; 
-     color: rgba(255, 255, 255, 0.6);
+  .collection-album-container .caption {
+    margin-top: 10px;
   }
-    p a {
+ 
+  .collection-album-container .caption p {
+    font-size: 16px;
+    font-weight: 300;
     color: rgba(255, 255, 255, 0.6);
   }
-    p a.album-name {
-    color: white;
-   }
+
+  .collection-album-container .caption p a {
+    color: rgba(255, 255, 255, 0.6);
   }
-  
+ 
+  .collection-album-container .caption p a.album-name {
+    color: white;
+  }
+ 
   .collection-album-container img {
-    max-width: 100%; 
+    max-width: 100%;
+  }
+ 
+  .collection-album-container .collection-album-image-container {
     position: relative;
   }
-
+ 
   .collection-album-container .collection-album-image-overlay {
     position: absolute;
     top: 0px;
@@ -39,7 +43,7 @@
     bottom: 20px;
     width: 100%;
     text-align: center;
-}
+  }
  
   .collection-album-container .collection-overlay-button {
     font-size: 20px;
@@ -49,18 +53,18 @@
     display: inline-block;
     width: 42px;
     height: 42px;
-  
-   hover {
-   cursor: pointer;
-   color: white;
-   background-color: #d2287b;
- }
- 
-   i {
-   line-height: 42px;
- }
- 
-  .fa-play {
-   padding-left: 5px;
   }
- }
+ 
+  .collection-album-container .collection-overlay-button:hover {
+    cursor: pointer;
+    color: white;
+    background-color: #d2287b;
+  }
+ 
+  .collection-album-container .collection-overlay-button i {
+    line-height: 42px;
+  }
+ 
+  .collection-album-container .collection-overlay-button .fa-play {
+    padding-left: 5px;
+  }
