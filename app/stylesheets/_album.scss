@@ -2,7 +2,11 @@
    margin-top: 55px;
    margin-bottom: 40px;
  }
- 
+
+.album-thumbnail {
+  max-width: 100%;
+}
+
  // This styles the right side of our Album Header
  .album-header-information {
    // Pushes the album information down and makes sure there's sufficient space at the bottom of the page

@@ -125,19 +125,21 @@ blocJams.service('SongPlayer', ['$rootScope', function($rootScope) {
       this.setSong(this.currentAlbum, song);
        this.currentSong = this.currentAlbum.songs[currentTrackIndex];
      },
-      seek: function(time) {
-       // Checks to make sure that a sound file is playing before seeking.
-       if(currentSoundFile) {
-         // Uses a Buzz method to set the time of the song.
-         currentSoundFile.setTime(time);
-       }
-     },
+      
      setVolume: function(volume) {
       if(currentSoundFile){
         currentSoundFile.setVolume(volume);
       }
       this.volume = volume;
     },
+     
+    seek: function(time) {
+       // Checks to make sure that a sound file is playing before seeking.
+       if(currentSoundFile) {
+         // Uses a Buzz method to set the time of the song.
+         currentSoundFile.setTime(time);
+       }
+     },
      onTimeUpdate: function(callback) {
       return $rootScope.$on('sound:timeupdate', callback);
     },
@@ -226,35 +228,7 @@ blocJams.controller('PlayerBar.controller', ['$scope', 'SongPlayer', function($s
  
 }]);
 
-  blocJams.filter('timecode', function(){
-   return function(seconds) {
-     seconds = Number.parseFloat(seconds);
- 
-     // Returned when no time is provided.
-     if (Number.isNaN(seconds)) {
-       return '-:--';
-     }
- 
-     // make it a whole number
-     var wholeSeconds = Math.floor(seconds);
- 
-     var minutes = Math.floor(wholeSeconds / 60);
- 
-     remainingSeconds = wholeSeconds % 60;
- 
-     var output = minutes + ':';
- 
-     // zero pad seconds, so 9 seconds should be :09
-     if (remainingSeconds < 10) {
-       output += '0';
-     }
- 
-     output += remainingSeconds;
- 
-     return output;
-   }
- });  
-
+  
  blocJams.directive('slider', ['$document', function($document){
   // Returns a number between 0 and 1 to determine where the mouse event happened along the slider bar.
      var calculateSliderPercentFromMouseEvent = function($slider, event) {
@@ -349,4 +323,33 @@ blocJams.controller('PlayerBar.controller', ['$scope', 'SongPlayer', function($s
        }
     }
    };
-     }]);       
+     }]);    
+
+     blocJams.filter('timecode', function(){
+   return function(seconds) {
+     seconds = Number.parseFloat(seconds);
+ 
+     // Returned when no time is provided.
+     if (Number.isNaN(seconds)) {
+       return '-:--';
+     }
+ 
+     // make it a whole number
+     var wholeSeconds = Math.floor(seconds);
+ 
+     var minutes = Math.floor(wholeSeconds / 60);
+ 
+     remainingSeconds = wholeSeconds % 60;
+ 
+     var output = minutes + ':';
+ 
+     // zero pad seconds, so 9 seconds should be :09
+     if (remainingSeconds < 10) {
+       output += '0';
+     }
+ 
+     output += remainingSeconds;
+ 
+     return output;
+   }
+ });     

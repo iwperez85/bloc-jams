@@ -7,7 +7,7 @@
  </div>
  
  <div class='selling-points container'> <!-- selling points -->
-   <div class='row'>
+   <div class='col-md-12'>
      <div class='point col-md-4'>
        <h5> Choose your music </h5>
        <p> The world is full of music, why should you have to listen to music that someone else chose? </p>
@@ -24,9 +24,24 @@
  </div>
  
  <div class="landing-album-list container">
-   <div class="row">
+   <div class="col-md-12">
      <div class="col-md-4" ng-repeat="albumURL in albumURLs">
-       <img  ng-src="{{albumURL}}">
+       
+       
+       <div class="hover panel">
+        <div class="front">
+          <img class="album-thumbnail" ng-src="{{albumURL}}">
+        </div>
+        <div class="back">
+          The Colors
+          <br>
+          Pablo Picasso
+        </div>
+      </div>
+       
+      
      </div>
    </div>
  </div>
+
+ 
