@@ -53,6 +53,25 @@ blocJams.controller('Landing.controller', ['$scope', function($scope) {
      $scope.subText += '!';
    };
 
+   $('.selling-points .point').hover(function() {
+     console.log('Hover action triggered.');
+     $(this).animate({'margin-top': '10px'});
+   });
+
+   
+   
+
+var onHoverAction = function(event) { console.log('Hover action triggered.'); $(this).animate({'margin-top': '10px'}); };
+
+var offHoverAction = function(event) { console.log('Off-hover action triggered.'); $(this).animate({'margin-top': '0px'}); };
+
+$('.selling-points .point').hover(onHoverAction, offHoverAction);
+ $("p").on("click",function(){
+$(this).animate({fontSize:"+=2px"});
+});
+
+
+
    $scope.albumURLs = [
      '/images/album-placeholders/album-1.jpg',
      '/images/album-placeholders/album-2.jpg',
