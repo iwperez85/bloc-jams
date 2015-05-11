@@ -353,7 +353,7 @@ body.landing .navbar {
   transition: all 0.4s ease-in-out; }
 
 .panel.flip .back {
-  background: yellow;
+  background: #7f6f85;
   border: none;
   height: 400px;
   position: absolute;
